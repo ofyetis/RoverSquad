@@ -20,14 +20,12 @@ namespace MarsRoverBusiness
         /// <returns></returns>
         public Result MakeTheRoverMove(Squad squad = null, Plateau plateau = null, bool considerBoundaryAndCrash = false)
         {
-            int coordinateX = CoordinateX;
-            int coordinateY = CoordinateY;
             //Find the rover index in squad to compare it later.
             int roverIndex = -1;
             int idx = -1;
             if (squad != null && squad.rovers.Count > 0)
             {
-                roverIndex = squad.rovers.FindIndex(x => x.CoordinateX == coordinateX && x.CoordinateY == coordinateY);
+                roverIndex = squad.rovers.FindIndex(x => x.CoordinateX == CoordinateX && x.CoordinateY == CoordinateY);
             };
             foreach (var movement in Movement)
             {
@@ -35,25 +33,9 @@ namespace MarsRoverBusiness
                 switch (movement)
                 {
                     case 'M':
-                        switch (Direction) //If direction is "E" or "W" the rover will move on the X axis else it will move on Y axis
-                        {
-                            case "E":
-                                coordinateX += 1;
-                                break;
-                            case "N":
-                                coordinateY += 1;
-                                break;
-                            case "W":
-                                coordinateX -= 1;
-                                break;
-                            case "S":
-                                coordinateY -= 1;
-                                break;
-                            default:
-                                break;
-                        }
+                        CalculateNewCoordinates(this);
                         //Controlling if the calculated point is out of border or not.
-                        if (considerBoundaryAndCrash && (coordinateX > plateau.UpperRightX || coordinateY > plateau.UpperRightY))
+                        if (considerBoundaryAndCrash && (CoordinateX > plateau.UpperRightX || CoordinateY > plateau.UpperRightY))
                         {
                             return new Result()
                             {
@@ -61,13 +43,10 @@ namespace MarsRoverBusiness
                                 ErrorMessage = "The route is not within the boundaries!"
                             };
                         }
-                        if (considerBoundaryAndCrash)
+                        //Finding the index of rover that is at the same point with this rover.
+                        if (considerBoundaryAndCrash && squad != null && squad.rovers.Count > 0)
                         {
-                            //Finding the index of rover that is at the same point with this rover.
-                            if (squad != null && squad.rovers.Count > 0)
-                            {
-                                idx = squad.rovers.FindIndex(x => x.CoordinateX == coordinateX && x.CoordinateY == coordinateY);
-                            }
+                            idx = squad.rovers.FindIndex(x => x.CoordinateX == CoordinateX && x.CoordinateY == CoordinateY);
                             //if there is rover at the corresponding point and this is an another rover, return error message
                             if (idx > -1 && idx != roverIndex)
                             {
@@ -80,54 +59,97 @@ namespace MarsRoverBusiness
                         }
                         break;
                     case 'L':
-                        switch (Direction)
-                        {
-                            case "E":
-                                Direction = "N";
-                                break;
-                            case "N":
-                                Direction = "W";
-                                break;
-                            case "W":
-                                Direction = "S";
-                                break;
-                            case "S":
-                                Direction = "E";
-                                break;
-                            default:
-                                break;
-                        }
-                        break;
                     case 'R':
-                        switch (Direction)
-                        {
-                            case "E":
-                                Direction = "S";
-                                break;
-                            case "N":
-                                Direction = "E";
-                                break;
-                            case "W":
-                                Direction = "N";
-                                break;
-                            case "S":
-                                Direction = "W";
-                                break;
-                            default:
-                                break;
-                        }
+                        CalculateNewDirection(this, movement);
                         break;
                     default:
                         break;
                 }
-            }
-            CoordinateX = coordinateX;
-            CoordinateY = coordinateY;
+            };
             return new Result()
             {
                 Success = true,
                 ErrorMessage = ""
-            }; ;
+            };
+        }
+
+        /// <summary>
+        /// It calculates the new coordinates according to the rover direction.
+        /// </summary>
+        /// <param name="rover"></param>
+        private static void CalculateNewCoordinates(Rover rover)
+        {
+            switch (rover.Direction) //If direction is "E" or "W" the rover will move on the X axis else it will move on Y axis
+            {
+                case "E":
+                    rover.CoordinateX += 1;
+                    break;
+                case "N":
+                    rover.CoordinateY += 1;
+                    break;
+                case "W":
+                    rover.CoordinateX -= 1;
+                    break;
+                case "S":
+                    rover.CoordinateY -= 1;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// It calculates the new direction according to the rover's previous direction and movement command.
+        /// </summary>
+        /// <param name="rover"></param>
+        /// <param name="movement"></param>
+        private static void CalculateNewDirection(Rover rover, char movement)
+        {
+            switch (rover.Direction)
+            {
+                case "E":
+                    if (movement == 'L')
+                    {
+                        rover.Direction = "N";
+                    }
+                    else
+                    {
+                        rover.Direction = "S";
+                    }
+                    break;
+                case "N":
+                    if (movement == 'L')
+                    {
+                        rover.Direction = "W";
+                    }
+                    else
+                    {
+                        rover.Direction = "E";
+                    }
+                    break;
+                case "W":
+                    if (movement == 'L')
+                    {
+                        rover.Direction = "S";
+                    }
+                    else
+                    {
+                        rover.Direction = "N";
+                    }
+                    break;
+                case "S":
+                    if (movement == 'L')
+                    {
+                        rover.Direction = "E";
+                    }
+                    else
+                    {
+                        rover.Direction = "W";
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
 
         /// <summary>
