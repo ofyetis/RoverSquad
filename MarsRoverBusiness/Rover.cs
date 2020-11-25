@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Helpers;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace MarsRoverBusiness
@@ -7,8 +8,8 @@ namespace MarsRoverBusiness
     {
         public int CoordinateX { get; set; }
         public int CoordinateY { get; set; }
-        public string Direction { get; set; }
-        public char[] Movement { get; set; }
+        public Direction Direction { get; set; }
+        public List<Movement> MovementList { get; set; }
 
         /// <summary>
         /// It calculates the new last position's coordinates and direction.
@@ -27,12 +28,12 @@ namespace MarsRoverBusiness
             {
                 roverIndex = squad.rovers.FindIndex(x => x.CoordinateX == CoordinateX && x.CoordinateY == CoordinateY);
             };
-            foreach (var movement in Movement)
+            foreach (var movement in MovementList)
             {
                 //switch the movement letter
                 switch (movement)
                 {
-                    case 'M':
+                    case Movement.Move:
                         CalculateNewCoordinates(this);
                         //Controlling if the calculated point is out of border or not.
                         if (considerBoundaryAndCrash && (CoordinateX > plateau.UpperRightX || CoordinateY > plateau.UpperRightY))
@@ -58,8 +59,8 @@ namespace MarsRoverBusiness
                             }
                         }
                         break;
-                    case 'L':
-                    case 'R':
+                    case Movement.TurnLeft:
+                    case Movement.TurnRight:
                         CalculateNewDirection(this, movement);
                         break;
                     default:
@@ -81,16 +82,16 @@ namespace MarsRoverBusiness
         {
             switch (rover.Direction) //If direction is "E" or "W" the rover will move on the X axis else it will move on Y axis
             {
-                case "E":
+                case Direction.East:
                     rover.CoordinateX += 1;
                     break;
-                case "N":
+                case Direction.North:
                     rover.CoordinateY += 1;
                     break;
-                case "W":
+                case Direction.West:
                     rover.CoordinateX -= 1;
                     break;
-                case "S":
+                case Direction.South:
                     rover.CoordinateY -= 1;
                     break;
                 default:
@@ -103,49 +104,21 @@ namespace MarsRoverBusiness
         /// </summary>
         /// <param name="rover"></param>
         /// <param name="movement"></param>
-        private static void CalculateNewDirection(Rover rover, char movement)
+        private static void CalculateNewDirection(Rover rover, Movement movement)
         {
             switch (rover.Direction)
             {
-                case "E":
-                    if (movement == 'L')
-                    {
-                        rover.Direction = "N";
-                    }
-                    else
-                    {
-                        rover.Direction = "S";
-                    }
+                case Direction.East:
+                    rover.Direction = movement == Movement.TurnLeft ? Direction.North : Direction.South;
                     break;
-                case "N":
-                    if (movement == 'L')
-                    {
-                        rover.Direction = "W";
-                    }
-                    else
-                    {
-                        rover.Direction = "E";
-                    }
+                case Direction.North:
+                    rover.Direction = movement == Movement.TurnLeft ? Direction.West : Direction.East;
                     break;
-                case "W":
-                    if (movement == 'L')
-                    {
-                        rover.Direction = "S";
-                    }
-                    else
-                    {
-                        rover.Direction = "N";
-                    }
+                case Direction.West:
+                    rover.Direction = movement == Movement.TurnLeft ? Direction.South : Direction.North;
                     break;
-                case "S":
-                    if (movement == 'L')
-                    {
-                        rover.Direction = "E";
-                    }
-                    else
-                    {
-                        rover.Direction = "W";
-                    }
+                case Direction.South:
+                    rover.Direction = movement == Movement.TurnLeft ? Direction.East : Direction.West;
                     break;
                 default:
                     break;
