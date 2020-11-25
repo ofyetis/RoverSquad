@@ -1,4 +1,5 @@
-﻿using MarsRoverBusiness;
+﻿using Helpers;
+using MarsRoverBusiness;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UnitTestMarsRover
@@ -297,8 +298,8 @@ namespace UnitTestMarsRover
             {
                 CoordinateX = 1,
                 CoordinateY = 2,
-                Direction = "N",
-                Movement = "LMLMLMLMM".ToCharArray()
+                Direction = Direction.North,
+                MovementList = Helpers.Helpers.GetMovementEnumList("LMLMLMLMM")
             };
 
             //Act
@@ -323,15 +324,15 @@ namespace UnitTestMarsRover
             {
                 CoordinateX = 1,
                 CoordinateY = 2,
-                Direction = "N",
-                Movement = "LMLMLMLMM".ToCharArray()
+                Direction = Direction.North,
+                MovementList = Helpers.Helpers.GetMovementEnumList("LMLMLMLMM")
             };
             Rover rover2 = new Rover()
             {
                 CoordinateX = 3,
                 CoordinateY = 3,
-                Direction = "E",
-                Movement = "MMM".ToCharArray()
+                Direction = Direction.East,
+                MovementList = Helpers.Helpers.GetMovementEnumList("MMM")
             };
             Squad squad = new Squad();
             squad.Add(rover);
@@ -359,15 +360,15 @@ namespace UnitTestMarsRover
             {
                 CoordinateX = 1,
                 CoordinateY = 2,
-                Direction = "N",
-                Movement = "LMLMLMLMM".ToCharArray()
+                Direction = Direction.North,
+                MovementList = Helpers.Helpers.GetMovementEnumList("LMLMLMLMM")
             };
             Rover rover2 = new Rover()
             {
                 CoordinateX = 6,
                 CoordinateY = 3,
-                Direction = "E",
-                Movement = "MMM".ToCharArray()
+                Direction = Direction.East,
+                MovementList = Helpers.Helpers.GetMovementEnumList("MMM")
             };
             Squad squad = new Squad();
             squad.Add(rover);
@@ -399,15 +400,15 @@ namespace UnitTestMarsRover
             {
                 CoordinateX = 1,
                 CoordinateY = 2,
-                Direction = "N",
-                Movement = "LMLMLMLMM".ToCharArray()
+                Direction = Direction.North,
+                MovementList = Helpers.Helpers.GetMovementEnumList("LMLMLMLMM")
             };
             Rover rover2 = new Rover()
             {
                 CoordinateX = 2,
                 CoordinateY = 2,
-                Direction = "W",
-                Movement = "MMM".ToCharArray()
+                Direction = Direction.West,
+                MovementList = Helpers.Helpers.GetMovementEnumList("MMM")
             };
             Squad squad = new Squad();
             squad.Add(rover);

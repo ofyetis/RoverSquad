@@ -19,15 +19,15 @@ namespace UnitTestMarsRover
             {
                 CoordinateX = 1,
                 CoordinateY = 2,
-                Direction = "N",
-                Movement = "LMLMLMLMM".ToCharArray()
+                Direction = Helpers.Direction.North,
+                MovementList = Helpers.Helpers.GetMovementEnumList("LMLMLMLMM")
             };
             Rover rover2 = new Rover()
             {
                 CoordinateX = 3,
                 CoordinateY = 3,
-                Direction = "E",
-                Movement = "MMRMMRMRRM".ToCharArray()
+                Direction = Helpers.Direction.East,
+                MovementList = Helpers.Helpers.GetMovementEnumList("MMRMMRMRRM")
             };
             Squad squad = new Squad();
             squad.Add(rover);
@@ -55,22 +55,22 @@ namespace UnitTestMarsRover
             {
                 CoordinateX = 1,
                 CoordinateY = 2,
-                Direction = "N",
-                Movement = "LMLMLMLMM".ToCharArray()
+                Direction = Helpers.Direction.North,
+                MovementList = Helpers.Helpers.GetMovementEnumList("LMLMLMLMM")
             };
             Rover rover2 = new Rover()
             {
                 CoordinateX = 3,
                 CoordinateY = 3,
-                Direction = "E",
-                Movement = "MMRMMRMRRM".ToCharArray()
+                Direction = Helpers.Direction.East,
+                MovementList = Helpers.Helpers.GetMovementEnumList("MMRMMRMRRM")
             };
             Rover rover3 = new Rover()
             {
                 CoordinateX = 3,
                 CoordinateY = 5,
-                Direction = "W",
-                Movement = "MMLM".ToCharArray()
+                Direction = Helpers.Direction.West,
+                MovementList = Helpers.Helpers.GetMovementEnumList("MMLM")
             };
             Squad squad = new Squad();
             squad.Add(rover);
@@ -99,22 +99,22 @@ namespace UnitTestMarsRover
             {
                 CoordinateX = 1,
                 CoordinateY = 2,
-                Direction = "N",
-                Movement = "LMLMLMLMM".ToCharArray()
+                Direction = Helpers.Direction.North,
+                MovementList = Helpers.Helpers.GetMovementEnumList("LMLMLMLMM")
             };
             Rover rover2 = new Rover()
             {
                 CoordinateX = 3,
                 CoordinateY = 3,
-                Direction = "E",
-                Movement = "MMRMMRMRRM".ToCharArray()
+                Direction = Helpers.Direction.East,
+                MovementList = Helpers.Helpers.GetMovementEnumList("MMRMMRMRRM")
             };
             Rover rover3 = new Rover()
             {
                 CoordinateX = 3,
                 CoordinateY = 5,
-                Direction = "W",
-                Movement = "MMLMM".ToCharArray()
+                Direction = Helpers.Direction.West,
+                MovementList = Helpers.Helpers.GetMovementEnumList("MMLMM")
             };
             Squad squad = new Squad();
             squad.Add(rover);
@@ -147,22 +147,22 @@ namespace UnitTestMarsRover
             {
                 CoordinateX = 6,
                 CoordinateY = 2,
-                Direction = "N",
-                Movement = "LMLMLMLMM".ToCharArray()
+                Direction = Helpers.Direction.North,
+                MovementList = Helpers.Helpers.GetMovementEnumList("LMLMLMLMM")
             };
             Rover rover2 = new Rover()
             {
                 CoordinateX = 3,
                 CoordinateY = 3,
-                Direction = "E",
-                Movement = "MMRMMRMRRM".ToCharArray()
+                Direction = Helpers.Direction.East,
+                MovementList = Helpers.Helpers.GetMovementEnumList("MMRMMRMRRM")
             };
             Rover rover3 = new Rover()
             {
                 CoordinateX = 3,
                 CoordinateY = 5,
-                Direction = "W",
-                Movement = "MMLMM".ToCharArray()
+                Direction = Helpers.Direction.West,
+                MovementList = Helpers.Helpers.GetMovementEnumList("MMLMM")
             };
             Squad squad = new Squad();
             squad.Add(rover);

@@ -1,4 +1,5 @@
-﻿using MarsRoverBusiness;
+﻿using Helpers;
+using MarsRoverBusiness;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,7 +42,7 @@ namespace MarsRover
                     {
                         foreach (var item in squad.rovers)
                         {
-                            Console.WriteLine(item.CoordinateX + " " + item.CoordinateY + " " + item.Direction);
+                            Console.WriteLine(item.CoordinateX + " " + item.CoordinateY + " " + Helpers.Helpers.GetDescription(item.Direction) );
                         }
                     }
                     else
@@ -100,7 +101,7 @@ namespace MarsRover
                 //Assigning rover's coordinates and direction
                 rover.CoordinateX = Convert.ToInt32(roverInformations[0]);
                 rover.CoordinateY = Convert.ToInt32(roverInformations[1]);
-                rover.Direction = roverInformations[2];
+                rover.Direction = Helpers.Helpers.GetValueFromDescription<Direction>(roverInformations[2]);
                 //displaying an error message if coordinates that is entered, is out of border
                 if (!rover.IsRoverPointWithinBorder(plateau))
                 {
@@ -118,6 +119,7 @@ namespace MarsRover
             while (true)
             {
                 Console.WriteLine("Write the movement command letters which are 'L', 'R', 'M', without any space between them: ");
+
                 string movementLetters = Console.ReadLine();
                 //displaying an error message if movement commands that is entered, has invalid format
                 if (!rover.IsMovementHasValidFormat(movementLetters))
@@ -125,7 +127,11 @@ namespace MarsRover
                     Console.WriteLine("Write in the correct format!");
                     continue;
                 };
-                rover.Movement = movementLetters.ToCharArray();
+                List<string> movementListString = new List<string>();
+                movementLetters.ToList().ForEach(x => movementListString.Add(x.ToString()));
+                List<Movement> movementList = new List<Movement>();
+                movementListString.ForEach(x => movementList.Add(Helpers.Helpers.GetValueFromDescription<Movement>(x)));
+                rover.MovementList = movementList;
                 break;
             }
             return rover;
